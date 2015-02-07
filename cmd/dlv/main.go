@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"os"
 	"runtime"
-
 	"github.com/derekparker/delve/client/cli"
-	"github.com/derekparker/delve/client/web"
+	"github.com/derekparker/delve/client/ws"
 )
 
 const version string = "0.3.2.beta"
@@ -46,7 +45,7 @@ func main() {
 	}
 
 	if remote {
-		web.Run(run, pid, address, flag.Args())
+		ws.Run(run, pid, address, flag.Args())
 	} else {
 		cli.Run(run, pid, flag.Args())
 	}
