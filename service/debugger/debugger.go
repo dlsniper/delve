@@ -175,8 +175,13 @@ func (d *Debugger) state() (*api.DebuggerState, error) {
 
 // CreateBreakpoint creates a breakpoint.
 func (d *Debugger) CreateBreakpoint(requestedBp *api.Breakpoint) (*api.Breakpoint, error) {
+	fmt.Println("locking create breakpoint")
 	d.processMutex.Lock()
-	defer d.processMutex.Unlock()
+	defer func() {
+		fmt.Println("unlocking create breakpoint")
+		d.processMutex.Unlock()
+	}()
+	fmt.Println("creating breakpoint")
 
 	var (
 		createdBp *api.Breakpoint
@@ -382,8 +387,13 @@ func (d *Debugger) Command(command *api.DebuggerCommand) (*api.DebuggerState, er
 		err = d.process.RequestManualStop()
 	}
 
+	fmt.Println("locking for command")
 	d.processMutex.Lock()
-	defer d.processMutex.Unlock()
+	defer func() {
+		fmt.Println("unlocking command")
+		d.processMutex.Unlock()
+	}()
+	fmt.Println("commanding in progress")
 
 	switch command.Name {
 	case api.Continue:

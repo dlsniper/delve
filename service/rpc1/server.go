@@ -130,6 +130,7 @@ func (s *RPCServer) State(arg interface{}, state *api.DebuggerState) error {
 }
 
 func (s *RPCServer) Command(command *api.DebuggerCommand, state *api.DebuggerState) error {
+	fmt.Println("command in rpc")
 	st, err := s.debugger.Command(command)
 	if err != nil {
 		return err
@@ -181,6 +182,7 @@ func (s *RPCServer) ListBreakpoints(arg interface{}, breakpoints *[]*api.Breakpo
 }
 
 func (s *RPCServer) CreateBreakpoint(bp, newBreakpoint *api.Breakpoint) error {
+	fmt.Println("create breakpoint in rpc")
 	createdbp, err := s.debugger.CreateBreakpoint(bp)
 	if err != nil {
 		return err
